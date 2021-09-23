@@ -13,6 +13,7 @@ class FirstApp(ui.Ui_MainWindow):
         self.up_json.clicked.connect(self.upload_json)
         self.up_csv.clicked.connect(self.upload_csv)
         self.up_xlsx.clicked.connect(self.upload_xlsx)
+        self.import_data.clicked.connect(self.import_data_to_df)
 
     def upload_json(self):
         options = QFileDialog.Options()
@@ -27,8 +28,12 @@ class FirstApp(ui.Ui_MainWindow):
                                                   "(*.csv)", options=options)
         if fileName:
             colnames = tl.file_transaction_handler(fileName, "csv")
-            for col in colnames:
-                self.textBrowser.append(col)
+            self.set_cols_in_textfield(colnames)
+
+    def set_cols_in_textfield(self, colnames):
+        self.textBrowser.clear()
+        for col in colnames:
+            self.textBrowser.append(col)
 
     def upload_xlsx(self):
         options = QFileDialog.Options()
@@ -36,6 +41,12 @@ class FirstApp(ui.Ui_MainWindow):
                                                   "(*.xlsx)", options=options)
         if fileName:
             colnames = tl.file_transaction_handler(fileName, "xlsx")
+            self.set_cols_in_textfield(colnames)
+
+    def import_data_to_df(self):
+        text = self.col_data.text()
+        self.col_data.clear() 
+        print(text)
 
 
 app = QtWidgets.QApplication(sys.argv)

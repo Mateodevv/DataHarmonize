@@ -9,3 +9,12 @@ def file_transaction_handler(fileName, dataType):
         None
     elif dataType == "xlsx":
         None
+
+
+def data_import_handler(fileName, dataType):
+    if dataType == "csv":
+        None
+    if dataType == "json":
+        None
+    if dataType == "xlsx":
+        None
