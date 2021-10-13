@@ -1,20 +1,21 @@
 from model import CSVExtractor
+from model import XLSXExtractor
 
 
 def file_transaction_handler(fileName, dataType):
     if dataType == "csv":
-        colnames = CSVExtractor.get_csv_colnames(fileName)
-        return colnames
+        return CSVExtractor.get_csv_colnames(fileName)
     elif dataType == "json":
         None
     elif dataType == "xlsx":
-        None
+        cols = XLSXExtractor.get_xlsx_colnames(fileName)
+        return cols
 
 
-def data_import_handler(fileName, dataType):
+def data_import_handler(data, dataType):
     if dataType == "csv":
-        None
+        print(data, dataType, "   *********   ")
     if dataType == "json":
-        None
+        print(data, dataType, " *   * ** * * ** * ")
     if dataType == "xlsx":
-        None
+        print(data, dataType, "* '* '*'*' *'*' *''''##")

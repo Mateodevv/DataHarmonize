@@ -73,7 +73,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="col_data">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -83,7 +83,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="import_data">
     <property name="geometry">
      <rect>
       <x>20</x>

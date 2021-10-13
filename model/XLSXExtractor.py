@@ -1,8 +1,9 @@
 import pandas as pd
+import model.utils.pandashelper as pdh
 
 
 def read_excel(path, sheet=None):
-    df = pd.read_excel("example_10.xlsx", sheet_name=sheet)
+    df = pd.read_excel(path, sheet_name=sheet)
     if sheet is not None:
         return df
     keys = []
@@ -12,3 +13,5 @@ def read_excel(path, sheet=None):
     return df
 
 
+def get_xlsx_colnames(fileName):
+    return pdh.get_colnames(read_excel(fileName))

@@ -4,11 +4,12 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from controller import transaction_layer as tl
 
-import ui
+from view import ui
 
 
 class FirstApp(ui.Ui_MainWindow):
     def __init__(self, window):
+        self.datatype = ""
         self.setupUi(window)
         self.up_json.clicked.connect(self.upload_json)
         self.up_csv.clicked.connect(self.upload_csv)
@@ -20,14 +21,16 @@ class FirstApp(ui.Ui_MainWindow):
         fileName, _ = QFileDialog.getOpenFileName(None, "QFileDialog.getOpenFileName()", "",
                                                   "(*.json)", options=options)
         if fileName:
-            tl.file_transaction_handler(fileName, "json")
+            self.datatype = "json"
+            tl.file_transaction_handler(fileName, self.datatype)
 
     def upload_csv(self):
         options = QFileDialog.Options()
         fileName, _ = QFileDialog.getOpenFileName(None, "QFileDialog.getOpenFileName()", "",
                                                   "(*.csv)", options=options)
         if fileName:
-            colnames = tl.file_transaction_handler(fileName, "csv")
+            self.datatype = "csv"
+            colnames = tl.file_transaction_handler(fileName, self.datatype)
             self.set_cols_in_textfield(colnames)
 
     def set_cols_in_textfield(self, colnames):
@@ -40,13 +43,13 @@ class FirstApp(ui.Ui_MainWindow):
         fileName, _ = QFileDialog.getOpenFileName(None, "QFileDialog.getOpenFileName()", "",
                                                   "(*.xlsx)", options=options)
         if fileName:
-            colnames = tl.file_transaction_handler(fileName, "xlsx")
+            self.datatype = "xlsx"
+            colnames = tl.file_transaction_handler(fileName, self.datatype)
             self.set_cols_in_textfield(colnames)
 
     def import_data_to_df(self):
-        text = self.col_data.text()
-        self.col_data.clear() 
-        print(text)
+        data = self.col_data.text()
+        tl.data_import_handler(data, self.datatype)
 
 
 app = QtWidgets.QApplication(sys.argv)

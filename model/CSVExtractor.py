@@ -8,5 +8,4 @@ def read_csv(path):
 
 
 def get_csv_colnames(path):
-    colnames = pdhelper.get_colnames(read_csv(path))
-    return colnames
+    return pdhelper.get_colnames(read_csv(path))

@@ -11,9 +11,12 @@ def read_metadata(df):
 def get_colnames(df):
     tmp = df.columns
     colnames = []
+    i = 0
     for col in tmp:
-        colnames.append(col)
+        colnames.append(str(i) + " " + str(col))
+        i += 1
     return colnames
+
 
 def return_selected_columns_df(df, selected_cols=None):
     if selected_cols is not None:
