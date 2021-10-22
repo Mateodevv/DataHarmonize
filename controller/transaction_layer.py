@@ -1,5 +1,5 @@
-from model import CSVExtractor
-from model import XLSXExtractor
+from model.DataExtractionLayer import CSVExtractor, XLSXExtractor
+from model.InterpreterEngineLayer.CommandInterpreter import extract_command
 
 
 def file_transaction_handler(fileName, dataType):
@@ -14,8 +14,14 @@ def file_transaction_handler(fileName, dataType):
 
 def data_import_handler(data, dataType):
     if dataType == "csv":
-        print(data, dataType, "   *********   ")
+
     if dataType == "json":
         print(data, dataType, " *   * ** * * ** * ")
     if dataType == "xlsx":
         print(data, dataType, "* '* '*'*' *'*' *''''##")
+
+
+def get_commands_from_input(commands):
+    commands = commands.split(",")
+    for command in commands:
+        extract_command(command)
