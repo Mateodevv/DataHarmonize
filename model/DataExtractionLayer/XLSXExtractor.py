@@ -15,3 +15,7 @@ def read_excel(path, sheet=None):
 
 def get_xlsx_colnames(fileName):
     return pdh.get_colnames(read_excel(fileName))
+
+
+def get_df(path):
+    return read_excel(path)
