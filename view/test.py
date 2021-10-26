@@ -2,8 +2,9 @@ import sys
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
-from controller import transaction_layer as tl
 
+import controller.transactionlayer
+from controller import transactionlayer
 from view import ui
 
 
@@ -15,6 +16,7 @@ class FirstApp(ui.Ui_MainWindow):
         self.up_csv.clicked.connect(self.upload_csv)
         self.up_xlsx.clicked.connect(self.upload_xlsx)
         self.import_data.clicked.connect(self.input_handler)
+        self.tl = controller.transactionlayer.TransactionLayer()
 
     def upload_json(self):
         options = QFileDialog.Options()
@@ -22,7 +24,7 @@ class FirstApp(ui.Ui_MainWindow):
                                                   "(*.json)", options=options)
         if fileName:
             self.datatype = "json"
-            tl.file_transaction_handler(fileName, self.datatype)
+            self.tl.file_transaction_handler(fileName, self.datatype)
 
     def upload_csv(self):
         options = QFileDialog.Options()
@@ -30,7 +32,7 @@ class FirstApp(ui.Ui_MainWindow):
                                                   "(*.csv)", options=options)
         if fileName:
             self.datatype = "csv"
-            colnames = tl.file_transaction_handler(fileName, self.datatype)
+            colnames = self.tl.file_transaction_handler(fileName, self.datatype)
             self.set_cols_in_textfield(colnames)
 
     def set_cols_in_textfield(self, colnames):
@@ -44,12 +46,12 @@ class FirstApp(ui.Ui_MainWindow):
                                                   "(*.xlsx)", options=options)
         if fileName:
             self.datatype = "xlsx"
-            colnames = tl.file_transaction_handler(fileName, self.datatype)
+            colnames = self.tl.file_transaction_handler(fileName, self.datatype)
             self.set_cols_in_textfield(colnames)
 
     def input_handler(self):
         data = self.col_data.text()
-        tl.data_import_handler(data, self.datatype)
+        self.tl.get_commands_from_input(data)
 
 
 app = QtWidgets.QApplication(sys.argv)
