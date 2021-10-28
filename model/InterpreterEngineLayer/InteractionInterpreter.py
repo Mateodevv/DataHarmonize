@@ -15,9 +15,21 @@ def extract_command(command, src_df):
         operationLayer.add_column(src_df.iloc[:, int(src_col)])
     if synval == "x":
         # Daten werden auf Duplikate verglichen und unique src_col-Daten werden an target_col gehängt
-        print(synval + " detected")
+        # operationLayer.append_values(src_df.iloc[:, int(src_col)])
         pass
     if synval == "-":
         # Daten aus src_col die auch in target_col vorhanden sind werden aus target_col entfernt
         print(synval + " detected")
         pass
+
+
+def export_csv(filename):
+    operationLayer.export_to_csv(filename)
+
+
+def export_df(filename):
+    operationLayer.export_df(filename)
+
+
+def export_json(filename):
+    operationLayer.export_json(filename)
