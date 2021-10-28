@@ -1,6 +1,6 @@
 import pandas as pd
 
-from model.DataExtractionLayer import CSVExtractor, XLSXExtractor
+from model.DataExtractionLayer import CSVExtractor, XLSXExtractor, JSONExtractor
 from model.InterpreterEngineLayer.InteractionInterpreter import Interperter
 
 
@@ -15,7 +15,8 @@ class TransactionLayer:
             self.src_df = CSVExtractor.get_df(fileName)
             return CSVExtractor.get_csv_colnames(fileName)
         elif dataType == "json":
-            pass
+            self.src_df = JSONExtractor.get_df(fileName)
+            return JSONExtractor.get_csv_colnames(fileName)
         elif dataType == "xlsx":
             self.src_df = XLSXExtractor.get_df(fileName)
             return XLSXExtractor.get_xlsx_colnames(fileName)
@@ -36,3 +37,6 @@ class TransactionLayer:
 
     def update_target_ui(self, colnames):
         self.app.update_target_text(colnames)
+
+    def get_target_df(self):
+        return self.interpreter.get_target_df()

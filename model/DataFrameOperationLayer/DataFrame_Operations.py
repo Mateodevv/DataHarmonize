@@ -24,15 +24,22 @@ class DataFrameOperations:
 
     def dropOperation(self, src_col, mode, target_col):
         target_col = list(self.target_df)[int(target_col)]
-        if mode == "r":
-            print(self.target_df)
-            for value in src_col.tolist():
-                self.target_df = self.target_df[self.target_df[target_col] == value]
-            print(self.target_df)
-        # drops only the value
-        elif mode == "v":
-            pass
 
+        # drops the row
+        if mode == "r":
+            for value in src_col.tolist():
+                for index, row in self.target_df.iterrows():
+                    if row[target_col] == value:
+                        self.target_df = self.target_df.drop(index)
+
+        # changes Value to None
+        elif mode == "v":
+            for value in src_col.tolist():
+                for index, row in self.target_df.iterrows():
+                    if row[target_col] == value:
+                        self.target_df[target_col][index] = None
+
+        self.target_df.reset_index(drop=True, inplace=True)
         self.interpreter.update_target_ui_datapipe(pdh.get_colnames(self.target_df))
 
     def export_json(self, filename):

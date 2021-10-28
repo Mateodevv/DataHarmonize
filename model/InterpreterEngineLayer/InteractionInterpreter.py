@@ -37,3 +37,6 @@ class Interperter:
 
     def export_json(self, filename):
         self.operationLayer.export_json(filename)
+
+    def get_target_df(self):
+        return self.operationLayer.get_target_df()

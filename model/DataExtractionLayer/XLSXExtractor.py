@@ -1,9 +1,10 @@
 import pandas as pd
+
 import model.utils.pandashelper as pdh
 
 
 def read_excel(path, sheet=None):
-    df = pd.read_excel(path, sheet_name=sheet)
+    df = pd.read_excel(path, sheet_name=sheet, index_col=0)
     if sheet is not None:
         return df
     keys = []

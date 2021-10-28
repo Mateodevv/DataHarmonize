@@ -19,6 +19,8 @@ class FirstApp(ui.Ui_MainWindow):
         self.exp_df.clicked.connect(self.export_DF)
         self.exp_json.clicked.connect(self.export_json)
         self.import_data.clicked.connect(self.input_handler)
+        self.htmlbutton.clicked.connect(self.update_dfPrintText)
+        self.rawstring.clicked.connect(self.update_dfPrintText)
         self.tl = controller.transactionlayer.TransactionLayer(self)
 
     def upload_json(self):
@@ -45,6 +47,15 @@ class FirstApp(ui.Ui_MainWindow):
                                                   "(*.xlsx)", options=options)
         if fileName:
             self.datatype = "xlsx"
+            colnames = self.tl.file_transaction_handler(fileName, self.datatype)
+            self.update_src_text(colnames)
+
+    def upload_json(self):
+        options = QFileDialog.Options()
+        fileName, _ = QFileDialog.getOpenFileName(None, "QFileDialog.getOpenFileName()", "",
+                                                  "(*.json)", options=options)
+        if fileName:
+            self.datatype = "json"
             colnames = self.tl.file_transaction_handler(fileName, self.datatype)
             self.update_src_text(colnames)
 
@@ -77,7 +88,6 @@ class FirstApp(ui.Ui_MainWindow):
     def display_success_icon(self):
         path = randompic.getRandomPath()
         pixmap = QtGui.QPixmap(path)
-        print(path)
         self.successIcon.setPixmap(pixmap)
 
     def update_src_text(self, colnames):
@@ -89,7 +99,15 @@ class FirstApp(ui.Ui_MainWindow):
         self.textBrowser_2.clear()
         for col in colnames:
             self.textBrowser_2.append(col)
+        self.update_dfPrintText()
         self.display_success_icon()
+
+    def update_dfPrintText(self):
+        if self.htmlbutton.isChecked():
+            data = self.tl.get_target_df().to_html()
+        else:
+            data = self.tl.get_target_df().to_string()
+        self.dfPrint.setText(data)
 
 
 app = QtWidgets.QApplication(sys.argv)
