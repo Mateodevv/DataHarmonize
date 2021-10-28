@@ -1,12 +1,14 @@
 import pandas as pd
 
 from model.DataExtractionLayer import CSVExtractor, XLSXExtractor
-import model.InterpreterEngineLayer.InteractionInterpreter as CI
+from model.InterpreterEngineLayer.InteractionInterpreter import Interperter
 
 
 class TransactionLayer:
-    def __init__(self):
+    def __init__(self, app):
         self.src_df = pd.DataFrame()
+        self.app = app
+        self.interpreter = Interperter(self)
 
     def file_transaction_handler(self, fileName, dataType):
         if dataType == "csv":
@@ -21,13 +23,16 @@ class TransactionLayer:
     def get_commands_from_input(self, commands):
         commands = commands.split(",")
         for command in commands:
-            CI.extract_command(command, self.src_df)
+            self.interpreter.extract_command(command, self.src_df)
 
     def save_file_to_csv(self, fileName):
-        CI.export_csv(fileName)
+        self.interpreter.export_csv(fileName)
 
     def save_file_to_df(self, fileName):
-        CI.export_df(fileName)
+        self.interpreter.export_df(fileName)
 
     def save_file_to_json(self, filename):
-        CI.export_json(filename)
+        self.interpreter.export_json(filename)
+
+    def update_target_ui(self, colnames):
+        self.app.update_target_text(colnames)
